@@ -22,6 +22,7 @@ There are multiple components to Mercurial:
 
 1. First, you need to install mysql and create a table to store all the orders. The schema of the table is:
 
+```
 mysql> describe orders;
 +------------+-------------+------+-----+---------+----------------+
 | Field      | Type        | Null | Key | Default | Extra          |
@@ -36,6 +37,8 @@ mysql> describe orders;
 | exec_price | varchar(20) | YES  |     | NULL    |                |
 | status     | varchar(50) | YES  |     | NULL    |                |
 +------------+-------------+------+-----+---------+----------------+
+
+```
 
 2. Fill in your table/db details in the config file (config.yaml)
 
