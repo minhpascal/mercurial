@@ -18,7 +18,7 @@ There are multiple components to Mercurial:
   * As orders are executed, their executed price is stored in the same table. This transaction data is analyzed in the Analysis.py script and is compared to a benchmark (S&P).
 
 
-# Set up
+## Set up
 
 1. First, you need to install mysql and create a table to store all the orders. The schema of the table is:
 
