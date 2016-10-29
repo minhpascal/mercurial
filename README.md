@@ -47,6 +47,7 @@ mysql> describe orders;
 4. Change universe details for each strategy in config.yaml to whatever you like.
 
 5. Run
+
 ```
 python strategy.py
 ```
@@ -54,6 +55,7 @@ python strategy.py
 6. Check 'orders' table to make sure strategy has output orders into the table.
 
 7. Execute the orders by running:
+
 ```
 python trade.py
 ```
