@@ -61,6 +61,7 @@ python trade.py
 8. Check 'orders' table to see if status of your orders has changed and confirm on Trader Workstation GUI that orders have been placed.
 
 9. Run 
-```python analysis.py
+```
+python analysis.py
 ```
 to analyze your portfolio.
