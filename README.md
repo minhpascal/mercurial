@@ -46,12 +46,21 @@ mysql> describe orders;
 
 4. Change universe details for each strategy in config.yaml to whatever you like.
 
-5. Run "python strategy.py"
+5. Run
+```
+python strategy.py
+```
 
 6. Check 'orders' table to make sure strategy has output orders into the table.
 
-7. Execute the orders by running "python trade.py"
+7. Execute the orders by running:
+```
+python trade.py
+```
 
 8. Check 'orders' table to see if status of your orders has changed and confirm on Trader Workstation GUI that orders have been placed.
 
-9. Run "python analysis.py" to analyze your portfolio.
+9. Run 
+```python analysis.py
+```
+to analyze your portfolio.
