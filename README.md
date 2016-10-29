@@ -22,37 +22,37 @@ There are multiple components to Mercurial:
 
 1. First, you need to install mysql and create a table to store all the orders. The schema of the table is:
 
-```
-mysql> describe orders;
-+------------+-------------+------+-----+---------+----------------+
-| Field      | Type        | Null | Key | Default | Extra          |
-+------------+-------------+------+-----+---------+----------------+
-| order_id   | int(11)     | NO   | PRI | NULL    | auto_increment |
-| date       | datetime    | YES  |     | NULL    |                |
-| strategy   | varchar(50) | YES  |     | NULL    |                |
-| security   | varchar(20) | YES  |     | NULL    |                |
-| action     | varchar(20) | YES  |     | NULL    |                |
-| size       | int(11)     | YES  |     | NULL    |                |
-| ask_price  | varchar(20) | YES  |     | NULL    |                |
-| exec_price | varchar(20) | YES  |     | NULL    |                |
-| status     | varchar(50) | YES  |     | NULL    |                |
-+------------+-------------+------+-----+---------+----------------+
+ ```
+ mysql> describe orders;
+ +------------+-------------+------+-----+---------+----------------+
+ | Field      | Type        | Null | Key | Default | Extra          |
+ +------------+-------------+------+-----+---------+----------------+
+ | order_id   | int(11)     | NO   | PRI | NULL    | auto_increment |
+ | date       | datetime    | YES  |     | NULL    |                |
+ | strategy   | varchar(50) | YES  |     | NULL    |                |
+ | security   | varchar(20) | YES  |     | NULL    |                |
+ | action     | varchar(20) | YES  |     | NULL    |                |
+ | size       | int(11)     | YES  |     | NULL    |                |
+ | ask_price  | varchar(20) | YES  |     | NULL    |                |
+ | exec_price | varchar(20) | YES  |     | NULL    |                |
+ | status     | varchar(50) | YES  |     | NULL    |                |
+ +------------+-------------+------+-----+---------+----------------+
 
-```
+ ```
 
 You will also need to create another table called 'positions' to hold your positions. Here is the schema:
 
-```
-mysql> describe positions;
-+-------------+-------------+------+-----+---------+-------+
-| Field       | Type        | Null | Key | Default | Extra |
-+-------------+-------------+------+-----+---------+-------+
-| security    | varchar(50) | YES  |     | NULL    |       |
-| avg_cost    | varchar(20) | YES  |     | NULL    |       |
-| total_value | varchar(20) | YES  |     | NULL    |       |
-| quantity    | int(11)     | YES  |     | NULL    |       |
-+-------------+-------------+------+-----+---------+-------+
-```
+ ```
+ mysql> describe positions;
+ +-------------+-------------+------+-----+---------+-------+
+ | Field       | Type        | Null | Key | Default | Extra |
+ +-------------+-------------+------+-----+---------+-------+
+ | security    | varchar(50) | YES  |     | NULL    |       |
+ | avg_cost    | varchar(20) | YES  |     | NULL    |       |
+ | total_value | varchar(20) | YES  |     | NULL    |       |
+ | quantity    | int(11)     | YES  |     | NULL    |       |
+ +-------------+-------------+------+-----+---------+-------+
+ ```
 
 2. Fill in your table/db details in the config file (config.yaml)
 
@@ -62,22 +62,22 @@ mysql> describe positions;
 
 5. Run
 
-```
-python strategy.py
-```
+ ```
+ python strategy.py
+ ```
 
 6. Check 'orders' table to make sure strategy has output orders into the table.
 
 7. Execute the orders by running:
 
-```
-python trade.py
-```
+ ```
+ python trade.py
+ ```
 
 8. Check 'orders' table to see if status of your orders has changed and confirm on Trader Workstation GUI that orders have been placed.
 
 9. Run 
-```
-python analysis.py
-```
+ ```
+ python analysis.py
+ ```
 to analyze your portfolio.
