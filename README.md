@@ -60,6 +60,7 @@ There are multiple components to Mercurial:
 2. Fill in your table/db details in the config file (config.yaml)
 
 3. Download Interactive Brokers demo tool - Trader Workstation, and fill in your port and client_id in config.yaml
+ You can download it from here: https://gdcdyn.interactivebrokers.com/en/index.php?f=1286
 
 4. Change universe details for each strategy in config.yaml to whatever you like.
 
