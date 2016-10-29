@@ -1,0 +1,18 @@
+IB_conn:
+  port: 7497
+  client_id: 5230
+
+mysql:
+  db: dummy
+  table: orders
+  user: root
+  pwd: 
+  host: localhost
+
+strategies:
+  MA:
+    universe: ['AAPL', 'AMD', 'LNKD', 'NFLX']
+    weight: 0.9
+  coin_flip:
+    universe: ['AAPL', 'AMD', 'NVDA']
+    weight: 0.1
