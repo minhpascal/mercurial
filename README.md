@@ -29,7 +29,7 @@ There are multiple components to Mercurial:
 
 1. First, you need to install mysql. You can find instructions on how to install mysql here: https://www.tutorialspoint.com/mysql/mysql-installation.htm 
 
-Then, you need to create two tables: 'orders' and 'positions'. Here is the schema of the two tables:
+  Then, you need to create two tables: 'orders' and 'positions'. Here is the schema of the two tables:
 
  ```
  mysql> describe orders;
