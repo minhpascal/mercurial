@@ -1,5 +1,9 @@
 # mercurial
 
+Summary - I wanted to write a simple framework that would allow me to take output of multiple strategies, execute them and finally, analyze them.
+
+Why is it called Mercurial? - Mercurial is an adjective that describes a person 'subject to sudden or unpredictable changes of mood or mind' ... just like the stock market. Furthermore, Mercury is the God of trade/financial gain in ancient Roman mythology. 
+
 Mercurial is a framework that allows you to:
 
 1. Get access to market data from yahoo
