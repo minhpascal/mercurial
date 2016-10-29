@@ -42,17 +42,17 @@ There are multiple components to Mercurial:
 
 You will also need to create another table called 'positions' to hold your positions. Here is the schema:
 
- ```
- mysql> describe positions;
- +-------------+-------------+------+-----+---------+-------+
- | Field       | Type        | Null | Key | Default | Extra |
- +-------------+-------------+------+-----+---------+-------+
- | security    | varchar(50) | YES  |     | NULL    |       |
- | avg_cost    | varchar(20) | YES  |     | NULL    |       |
- | total_value | varchar(20) | YES  |     | NULL    |       |
- | quantity    | int(11)     | YES  |     | NULL    |       |
- +-------------+-------------+------+-----+---------+-------+
- ```
+  ```
+  mysql> describe positions;
+  +-------------+-------------+------+-----+---------+-------+
+  | Field       | Type        | Null | Key | Default | Extra |
+  +-------------+-------------+------+-----+---------+-------+
+  | security    | varchar(50) | YES  |     | NULL    |       |
+  | avg_cost    | varchar(20) | YES  |     | NULL    |       |
+  | total_value | varchar(20) | YES  |     | NULL    |       |
+  | quantity    | int(11)     | YES  |     | NULL    |       |
+  +-------------+-------------+------+-----+---------+-------+
+  ```
 
 2. Fill in your table/db details in the config file (config.yaml)
 
