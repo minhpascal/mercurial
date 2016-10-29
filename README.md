@@ -1,9 +1,12 @@
 # mercurial
 
-Summary - I wanted to write a simple framework that would allow me to take output of multiple strategies, execute them and finally, analyze them.
+###Summary 
+I wanted to write a simple framework that would allow me to take output of multiple strategies, execute them and finally, analyze them.
 
-Why is it called Mercurial? - Mercurial is an adjective that describes a person 'subject to sudden or unpredictable changes of mood or mind' ... just like the stock market. Furthermore, Mercury is the God of trade/financial gain in ancient Roman mythology. 
+###Why is it called Mercurial? 
+Mercurial is an adjective that describes a person 'subject to sudden or unpredictable changes of mood or mind' ... just like the stock market. Furthermore, Mercury is the God of trade/financial gain in ancient Roman mythology. 
 
+###What does it do?
 Mercurial is a framework that allows you to:
 
 1. Get access to market data from yahoo
@@ -22,9 +25,11 @@ There are multiple components to Mercurial:
   * As orders are executed, their executed price is stored in the same table. This transaction data is analyzed in the Analysis.py script and is compared to a benchmark (S&P).
 
 
-## Set up
+## How do you set it up?
 
-1. First, you need to install mysql and create a table to store all the orders. The schema of the table is:
+1. First, you need to install mysql. You can find instructions on how to install mysql here: https://www.tutorialspoint.com/mysql/mysql-installation.htm 
+
+Then, you need to create two tables: 'orders' and 'positions'. Here is the schema of the two tables:
 
  ```
  mysql> describe orders;
@@ -42,10 +47,6 @@ There are multiple components to Mercurial:
  | status     | varchar(50) | YES  |     | NULL    |                |
  +------------+-------------+------+-----+---------+----------------+
 
- ```
-
- You will also need to create another table called 'positions' to hold your positions. Here is the schema:
- ```
  mysql> describe positions;
  +-------------+-------------+------+-----+---------+-------+
  | Field       | Type        | Null | Key | Default | Extra |
