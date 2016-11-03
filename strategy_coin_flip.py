@@ -15,8 +15,8 @@ def coin_flip(universe):
 
     for sym in universe:
         if num:
-            decision[sym] = 'buy'
+            decision[sym] = 1
         else:
-            decision[sym] = 'sell'
+            decision[sym] = -1
 
     return decision

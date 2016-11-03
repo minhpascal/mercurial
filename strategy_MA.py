@@ -55,8 +55,8 @@ def MA(universe):
         rolling_mean_far[sym] = pd.rolling_mean(data[sym].Close, window=window_far).ix[today]
 
         if rolling_mean_near[sym] > rolling_mean_far[sym]:
-            decision[sym] = 'buy'
+            decision[sym] = 1
         else:
-            decision[sym] = 'sell'
+            decision[sym] = -1
 
     return decision
