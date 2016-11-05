@@ -30,18 +30,20 @@ def get_strategy_output(strategies):
     return strategy_output
 
 # Get the output of strategies
-strategy_output = get_strategy_output(cfg['strategies'])
+strategy_output = get_strategy_output(cfg['strategies_to_run'])
 
 # put output in dataframe and fill any NaN with 0
 strategy_output = pd.DataFrame(strategy_output).fillna(value=0)
 
 # Calculate the 'result' by using strategy weights
-strategy_output['result'] = np.sign(strategy_output.MA * cfg['strategies']['MA']['weight'] + strategy_output.coin_flip * cfg['strategies']['coin_flip']['weight'])
+strategy_output['result'] = np.sign(strategy_output.MA * cfg['strategies']['MA']['weight'] +
+                                    strategy_output.coin_flip * cfg['strategies']['coin_flip']['weight'])
 
 # Replace 1 with 'buy' and -1 with 'sell'
 strategy_output['result'] = ['buy' if x==1 else 'sell' for x in strategy_output['result']]
 
 # Only select result field and convert to dictionary
+
 strategy_output = strategy_output['result'].to_dict()
 
 

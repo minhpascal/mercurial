@@ -9,6 +9,8 @@ mysql:
   pwd: 
   host: localhost
 
+strategies_to_run: ['MA', 'coin_flip']
+
 strategies:
   MA:
     universe: ['AAPL', 'AMD', 'LNKD', 'NFLX']
