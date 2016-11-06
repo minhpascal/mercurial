@@ -18,14 +18,8 @@ global oid
 with open("config.yaml", 'r') as ymlfile:
     cfg = yaml.load(ymlfile)
 
-# Connect to database
-db = MySQLdb.connect(host=cfg['mysql']['host'],    # your host, usually localhost
-                     user=cfg['mysql']['user'],         # your username
-                     passwd=cfg['mysql']['pwd'],  # your password
-                     db=cfg['mysql']['db'])        # name of the data base
-
-cur = db.cursor()
-db.autocommit(on=1)
+# Connect to MYSQL db
+db, cur = ut.connect_to_db(cfg)
 
 # Delete any previous positions we have
 delete_positions = "DELETE from positions"

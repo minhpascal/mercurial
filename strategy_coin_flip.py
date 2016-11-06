@@ -1,7 +1,7 @@
 import random
 
 
-def coin_flip(universe):
+def coin_flip(universe, date):
 
     """
     Dummy strategy. Get a random integer from 0 to 1 and based on that, decide whether to buy or sell.

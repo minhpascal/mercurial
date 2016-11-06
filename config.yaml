@@ -6,7 +6,7 @@ mysql:
   db: dummy
   table: orders
   user: root
-  pwd: 
+  pwd:
   host: localhost
 
 strategies_to_run: ['MA', 'coin_flip']

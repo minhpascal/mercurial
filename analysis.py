@@ -9,21 +9,38 @@ from dateutil import parser
 import MySQLdb
 import market_data as md
 import yaml
+import utils as ut
+import argparse
+
+arg_parser = argparse.ArgumentParser()
+arg_parser.add_argument('-mode', '--mode', help='determine whether to run in simulation mode or normal', required=True)
+arg_parser.add_argument('-sim_id', '--sim_id', help='id to keep track of the simulation', required=False)
+args = vars(arg_parser.parse_args())
+
+# If the analysis is being run in simulation mode,
+# then run on transactions market as 'simulation'.
+# Otherwise, run it for 'filled' transactions.
+if args['mode'] == 'simulation':
+    status = 'simulation'
+else:
+    status = 'filled'
+
+sim_id = args['sim_id']
+
+if not sim_id:
+    sim_id = 'NULL'
 
 with open("config.yaml", 'r') as ymlfile:
     cfg = yaml.load(ymlfile)
 
-# Connect to mysql database
-db = MySQLdb.connect(host=cfg['mysql']['host'],    # your host, usually localhost
-                     user=cfg['mysql']['user'],         # your username
-                     passwd=cfg['mysql']['pwd'],  # your password
-                     db=cfg['mysql']['db'])        # name of the data base
+# Connect to MYSQL db
+db, cur = ut.connect_to_db(cfg)
 
-cur = db.cursor()
-db.autocommit(on=1)
-
-query = "SELECT * from {db}.{table} where status='filled';".format(table=cfg['mysql']['table'],
-                                                                   db=cfg['mysql']['db'])
+query = "SELECT * from {db}.{table} where status='{status}' and " \
+        "sim_id='{sim_id}';".format(table=cfg['mysql']['table'],
+                                    db=cfg['mysql']['db'],
+                                    status=status,
+                                    sim_id=sim_id)
 
 transactions = pd.read_sql(query, con=db)
 transactions = transactions.set_index('order_id')
@@ -33,6 +50,7 @@ today = dt.datetime.today().strftime("%Y%m%d")
 
 # Get minimum transaction date
 min_date = parser.parse(str(transactions.date.min()))
+max_date = parser.parse(str(transactions.date.max()))
 
 
 # Function for getting list of dates
@@ -43,10 +61,7 @@ def daterange(start_date, end_date, step):
 
 def pf_stats(single_date, transactions, min_date, flag):
 
-    query = "SELECT * from {db}.{table} where status='filled';".format(table=cfg['mysql']['table'],
-                                                                       db=cfg['mysql']['db'])
-    transactions = pd.read_sql(query, con=db)
-    transactions = transactions.set_index('order_id')
+    print transactions
 
     transactions['cost'] = transactions['exec_price'].astype(float) * transactions['size']
 
@@ -93,6 +108,7 @@ def pf_stats(single_date, transactions, min_date, flag):
             transactions_active[a & b] = transactions_active[a & b].set_value(
                 transactions_active[a & b].index, 'cost', new_cost)
 
+    print transactions_active
     transactions_active = transactions_active[transactions_active['action'] != 'sell']
     transactions_active = transactions_active.append(cs)
 
@@ -107,10 +123,13 @@ def pf_stats(single_date, transactions, min_date, flag):
         return pd.DataFrame({'date': [single_date], 'total': [net]})
 
 
-start_date = parser.parse('20160905')
-end_date = parser.parse(today)
+start_date = min_date
+end_date = max_date
 
 net = pd.DataFrame([])
+
+print "Running analysis from {sd} to {ed}.".format(sd=start_date,
+                                                   ed=end_date)
 
 for single_date in daterange(start_date, end_date, step=1):
     if single_date >= min_date:
