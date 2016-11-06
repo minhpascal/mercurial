@@ -1,3 +1,8 @@
+"""
+This script executes individual strategies and groups the result together based on weights.
+
+"""
+
 import MySQLdb
 import market_data as md
 import yaml
@@ -8,7 +13,7 @@ with open("config.yaml", 'r') as ymlfile:
     cfg = yaml.load(ymlfile)
 
 # Import all strategies
-for strategy in cfg['strategies']:
+for strategy in cfg['strategies_to_run']:
     exec("""from strategy_{strategy} import *""".format(strategy=strategy))
 
 # Loop through all the strategies and get their output
