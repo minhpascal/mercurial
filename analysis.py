@@ -1,3 +1,8 @@
+"""
+This script is for analyzing transactions so we can compare our portfolio's performance to the market (S&P).
+
+"""
+
 import pandas as pd
 import datetime as dt
 from dateutil import parser
