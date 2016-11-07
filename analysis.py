@@ -61,7 +61,7 @@ def daterange(start_date, end_date, step):
 
 def pf_stats(single_date, transactions, min_date, flag):
 
-    print transactions
+    print("Analyzing transaction from "+single_date)
 
     transactions['cost'] = transactions['exec_price'].astype(float) * transactions['size']
 
@@ -72,6 +72,8 @@ def pf_stats(single_date, transactions, min_date, flag):
     cs['action'] = None
     cs = cs.rename(columns={'total_value':'value', 'quantity':'size'})
     cs = cs.drop('avg_cost', 1)
+
+    transactions = transactions[transactions['date'] <= str(single_date)]
 
     unique_stocks = pd.unique(transactions.security)
 
@@ -108,7 +110,6 @@ def pf_stats(single_date, transactions, min_date, flag):
             transactions_active[a & b] = transactions_active[a & b].set_value(
                 transactions_active[a & b].index, 'cost', new_cost)
 
-    print transactions_active
     transactions_active = transactions_active[transactions_active['action'] != 'sell']
     transactions_active = transactions_active.append(cs)
 
