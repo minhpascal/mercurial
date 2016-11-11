@@ -12,12 +12,14 @@ import argparse
 import utils as ut
 import datetime as dt
 
+
+# Parse arguments
 arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('-date', '--date', help='Date you want ro run the strategy for', required=False)
 arg_parser.add_argument('-sim_id', '--sim_id', help='id to keep track of the simulation', required=False)
 args = vars(arg_parser.parse_args())
 
-# Check to see if date argument was passed
+# Check to see if 'date' argument was passed
 # If it was then use that else use today's date
 if args['date']:
     date = args['date']
@@ -64,6 +66,7 @@ strategy_output = get_strategy_output(cfg['strategies_to_run'], date)
 strategy_output = pd.DataFrame(strategy_output).fillna(value=0)
 
 # Calculate the 'result' by using strategy weights
+# Need to make this config driven
 strategy_output['result'] = np.sign(strategy_output.MA * cfg['strategies']['MA']['weight'] +
                                     strategy_output.coin_flip * cfg['strategies']['coin_flip']['weight'])
 
@@ -76,11 +79,15 @@ strategy_output = strategy_output['result'].to_dict()
 # Connect to MYSQL db
 db, cur = ut.connect_to_db(cfg)
 
+
 # For each strategy and symbol we want to trade, get the latest price and insert into orders table
 for sym in strategy_output:
 
+    # Get the close price from yahoo
     ask_price = md.get_market_data(sym, date, date).Close.ix[0]
 
+    # If the date is today's date then we are not running in simulation mode
+    # otherwise, change status to 'simulation' and use ask_price as exec_price
     if dt.datetime.now().strftime('%Y%m%d') == date:
         status = 'NULL'
         exec_price = 'NULL'
