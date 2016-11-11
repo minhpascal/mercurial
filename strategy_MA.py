@@ -14,9 +14,6 @@ def MA(universe, date):
     :return:
     """
 
-    # Define 'today' (based on day of the week)
-    #today = dt.datetime.strptime(date, '%Y%m%d')
-
     # Get the date 30 days from now. THis will be used to make sure we have enough market data to
     # calculate moving averages
     start = (parser.parse(date) + dt.timedelta(-30)).strftime('%Y%m%d')
