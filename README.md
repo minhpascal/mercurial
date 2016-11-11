@@ -1,7 +1,7 @@
 # mercurial
 
 ###Summary 
-I wanted to write a simple framework that would allow me to take output of multiple strategies, execute them and finally, analyze them.
+I wanted to write a simple framework that would allow me to easily write new strategies, backtest them, take their combined output, execute them and finally, analyze them.
 
 ###Why is it called Mercurial? 
 Mercurial is an adjective that describes a person 'subject to sudden or unpredictable changes of mood or mind' ... just like the stock market. Furthermore, Mercury is the God of trade/financial gain in ancient Roman mythology. 
@@ -11,9 +11,10 @@ Mercurial is a framework that allows you to:
 
 1. Get access to market data from yahoo
 2. Plug-in strategies
-3. Consolidate output of multiple strategies based on their weighting (not finished yet)
-4. Execute trades via Interactive Brokers
-5. Analyze your portfolio and compare to benchmark (S&P)
+3. Consolidate output of multiple strategies based on their weighting
+4. Backtest the strategies
+5. Execute trades via Interactive Brokers
+6. Analyze your portfolio and compare to benchmark (S&P)
 
 There are multiple components to Mercurial:
 
@@ -23,6 +24,8 @@ There are multiple components to Mercurial:
   * This script reads strategy output from 'orders' table and executes the orders via Interactive Brokers. As orders are sent to Interactive Brokers, messages are received and stored in 'orders' table to reflect latest status of each order. For example, as an order is sent, it's status changes to 'opened' and as it is executed, it changes to 'filed'.
 3. Analysis
   * As orders are executed, their executed price is stored in the same table. This transaction data is analyzed in the Analysis.py script and is compared to a benchmark (S&P).
+4. Backtester
+  * The backtester can run the strategies for a certain historical period and analyze the results so you can analyze the performance of your strategies.
 
 
 ### How do you set it up?
