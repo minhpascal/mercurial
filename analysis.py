@@ -11,6 +11,7 @@ import market_data as md
 import yaml
 import utils as ut
 import argparse
+import numpy as np
 
 arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('-mode', '--mode', help='determine whether to run in simulation mode or normal', required=True)
@@ -36,6 +37,7 @@ with open("config.yaml", 'r') as ymlfile:
 # Connect to MYSQL db
 db, cur = ut.connect_to_db(cfg)
 
+# Query for getting transactions
 query = "SELECT * from {db}.{table} where status='{status}' and " \
         "sim_id='{sim_id}';".format(table=cfg['mysql']['table'],
                                     db=cfg['mysql']['db'],
@@ -75,6 +77,23 @@ def pf_stats(single_date, transactions, min_date, flag):
 
     transactions = transactions[transactions['date'] <= str(single_date)]
 
+    # Query for getting positions
+    get_portfolio_query = "select security, action, sum(size) as size from {table} " \
+                          "where sim_id= '{sim_id}' and date <= '{date}' group by security, action;".format(
+        table=cfg['mysql']['table'],
+        sim_id=sim_id,
+        date=single_date)
+
+    positions = pd.read_sql(get_portfolio_query, con=db)
+
+    # Change sign of size to negative if action == 'sell'
+    positions['size'] = np.where(positions['action'] == 'sell', positions['size'] * -1, positions['size'])
+
+    # Get net positions
+    net_positions = positions.groupby(['security']).sum()
+
+    net_positions = net_positions[net_positions['size'] > 0].reset_index()
+
     unique_stocks = pd.unique(transactions.security)
 
     price = {}
@@ -87,8 +106,15 @@ def pf_stats(single_date, transactions, min_date, flag):
             transactions.loc[index, 'value'] = row.size * price[row.security].tail(n=1)['Adj Close'].ix[0]
             cs['value'] = (cs['value'].astype(float) - (float(row.exec_price) * row.size))
         if row.action == 'sell':
-            transactions.loc[index, 'value'] = row.size * float(row.exec_price)
-            cs['value'] = (cs['value'].astype(float) + (float(row.exec_price) * row.size))
+            if row.security in net_positions.security:
+                #print('we have this security so we can sell')
+                transactions.loc[index, 'value'] = row.size * float(row.exec_price)
+                cs['value'] = (cs['value'].astype(float) + (float(row.exec_price) * row.size))
+            else:
+                #print("we don't have this security so we are going to ignore it")
+                pass
+
+    transactions = transactions[transactions['value'].notnull()]
 
     transactions_active = transactions.groupby(['security', 'action']).sum()
     transactions_active = transactions_active.reset_index()
@@ -155,4 +181,6 @@ final = pd.merge(sp, net, how='inner', left_index=True, right_index=True)
 final['sp_returns'] = final.Close.pct_change()*100
 final['pt_returns'] = final.total.pct_change()*100
 
-print final[['total', 'sp_returns', 'pt_returns']]
+
+# Get the cumulative sum of portfolio and s&p returns and save to csv
+final.cumsum()[['sp_returns', 'pt_returns']].to_csv('returns_{sim_id}.csv'.format(sim_id=sim_id))
