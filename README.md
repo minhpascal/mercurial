@@ -98,5 +98,5 @@ to analyze your portfolio.
 ```
 python backtest.py -start <YYYYMMDD> -end <YYYYMMDD> -mode simulation -sim_id <simulation_id>
 ```
-A simulation id is an id you want to use to identify results of your simulation from any previous or future simulation.
+A simulation id is an id you want to use to differentiate results of your simulation from any previous or future simulation.
 -end is an optional parameter. If you don't specify it, the backtester will use today's date as the end date.
