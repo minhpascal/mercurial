@@ -36,19 +36,19 @@ There are multiple components to Mercurial:
 
  ```
  mysql> describe orders;
- +------------+-------------+------+-----+---------+----------------+
- | Field      | Type        | Null | Key | Default | Extra          |
- +------------+-------------+------+-----+---------+----------------+
- | order_id   | int(11)     | NO   | PRI | NULL    | auto_increment |
- | date       | datetime    | YES  |     | NULL    |                |
- | strategy   | varchar(50) | YES  |     | NULL    |                |
- | security   | varchar(20) | YES  |     | NULL    |                |
- | action     | varchar(20) | YES  |     | NULL    |                |
- | size       | int(11)     | YES  |     | NULL    |                |
- | ask_price  | varchar(20) | YES  |     | NULL    |                |
- | exec_price | varchar(20) | YES  |     | NULL    |                |
- | status     | varchar(50) | YES  |     | NULL    |                |
- +------------+-------------+------+-----+---------+----------------+
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| order_id   | int(11)     | NO   | PRI | NULL    | auto_increment |
+| date       | datetime    | YES  |     | NULL    |                |
+| sim_id     | varchar(60) | YES  |     | NULL    |                |
+| security   | varchar(20) | YES  |     | NULL    |                |
+| action     | varchar(20) | YES  |     | NULL    |                |
+| size       | int(11)     | YES  |     | NULL    |                |
+| ask_price  | varchar(20) | YES  |     | NULL    |                |
+| exec_price | varchar(20) | YES  |     | NULL    |                |
+| status     | varchar(50) | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
 
  mysql> describe positions;
  +-------------+-------------+------+-----+---------+-------+
@@ -89,6 +89,7 @@ There are multiple components to Mercurial:
  python analysis.py
  ```
 to analyze your portfolio.
+
 
 
 ### Running the backtester
